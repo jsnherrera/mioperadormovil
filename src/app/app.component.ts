@@ -2,7 +2,7 @@ import { PnnResponse } from './models/PnnResponse';
 import { PnnDTO } from './models/PnnDTO';
 import { Component, OnInit } from '@angular/core';
 import { PlanService } from './services/plan.service';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -14,22 +14,35 @@ export class AppComponent implements OnInit {
   phoneNumber: number;
   pnns: PnnDTO[] = [];
   items: MenuItem[];
+  pbLoading: boolean = false;
 
-  constructor(private planService: PlanService) {
+  constructor(private planService: PlanService,
+    private messageService: MessageService) {
 
+  }
+
+  addSingle() {
+    this.messageService.add({ severity: 'success', summary: 'Consulta exitosa', detail: 'El número se consultó correctamente' });
   }
 
   getPnnByNumber(): void {
     if (this.phoneNumber) {
+      this.pbLoading = true;
       this.pnns = [];
-      this.planService.getPnnByNumber(this.phoneNumber).subscribe(
-        (result: PnnResponse) => {
-          console.log(result.pnn);
-          if (result.pnn) {
-            this.pnns.push(result.pnn);
-          }
-        },
-      );
+      try {
+        this.planService.getPnnByNumber(this.phoneNumber).subscribe(
+          (result: PnnResponse) => {
+            if (result.pnn) {
+              this.pnns.push(result.pnn);
+            }
+            this.pbLoading = false;
+            this.addSingle();
+          },
+        );
+      } catch (err) {
+        console.log(err);
+        this.pbLoading = false;
+      }
     }
   }
 

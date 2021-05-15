@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { PlanService } from './services/plan.service';
+import { MessageService } from 'primeng/api';
+
 import { HttpClientModule } from '@angular/common/http';
 
 import { MenubarModule } from 'primeng/menubar';
@@ -16,6 +18,8 @@ import { TabViewModule } from 'primeng/tabview';
 import { PanelModule } from 'primeng/panel';
 import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -33,9 +37,12 @@ import { TableModule } from 'primeng/table';
     TabViewModule,
     PanelModule,
     TooltipModule,
-    TableModule
+    TableModule,
+    ProgressBarModule,
+    ToastModule
   ],
-  providers: [PlanService],
+  providers: [PlanService,
+    MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

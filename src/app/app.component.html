@@ -43,11 +43,12 @@
 <br />
 <br />
 <br />
-<p-panel header="¿Quieres saber que compañía telefónica es dueña de tu número?">
+<p-toast position="top-center"></p-toast>
+<p-panel header="Busca el operador móvil de cualquier número">
   <div class="card">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-12 p-md-12">
-        <input type="number" pInputText placeholder="Número telefonico" [(ngModel)]="phoneNumber"
+        <input type="number" pInputText placeholder="Número telefónico a 10 dígitos" [(ngModel)]="phoneNumber"
           pTooltip="Escribe tu número a 10 digitos" tooltipPosition="bottom">
       </div>
       <div class="p-field p-col-12 p-md-6">
@@ -55,6 +56,9 @@
       </div>
       <div class="p-field p-col-12 p-md-6">
         <button pButton pRipple type="button" label="Limpiar" class="p-button-secondary" (click)="limpiar()"></button>
+      </div>
+      <div class="p-field p-col-12 p-md-12">
+        <p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="pbLoading"></p-progressBar>
       </div>
     </div>
   </div>
