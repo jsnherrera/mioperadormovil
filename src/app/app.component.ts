@@ -21,16 +21,12 @@ export class AppComponent implements OnInit {
 
   }
 
-  showSuccess() {
-    this.messageService.add({ severity: 'success', summary: 'Consulta exitosa', detail: 'El número se consultó correctamente' });
-  }
-
-  showError(msgErr: string) {
-    this.messageService.add({ severity: 'error', summary: 'Error', detail: msgErr });
+  showSToast(severity: string, summary: string, detail: string) {
+    this.messageService.add({ severity, summary, detail });
   }
 
   getPnnByNumber(): void {
-    if (this.phoneNumber) {
+    if (this.phoneNumber && this.phoneNumber.toString().length === 10) {
       this.pbLoading = true;
       this.pnns = [];
       this.planService.getPnnByNumber(this.phoneNumber).subscribe(
@@ -39,19 +35,34 @@ export class AppComponent implements OnInit {
             this.pnns.push(result.pnn);
           }
           this.pbLoading = false;
-          this.showSuccess();
+          if (this.pnns.length !== 0) {
+            this.showSToast(severity.success, 'Petición exitosa', 'El número se consultó correctamente');
+          }
+          else {
+            this.showSToast(severity.info, 'Info', 'No encontramos el número en ninguna operadora');
+          }
         }, err => {
           console.log(err);
           this.pbLoading = false;
-          this.showError(err.message);
+          this.showSToast(severity.error, 'Error', 'Esto es vergonzoso se ha presentado un error');
         }
       );
+    }
+    else {
+      this.showSToast(severity.warn, 'Captura incorrecta', 'El número capturado debe ser de 10 dígitos');
     }
   }
 
   limpiar(): void {
     this.phoneNumber = null;
     this.pnns = [];
+    this.showSToast(severity.info, 'Info', 'Formulario limpio');
+  }
+
+  validarLongitud(event: KeyboardEvent) {
+    if (this.phoneNumber && this.phoneNumber.toString().length >= 10) {
+      event.preventDefault();
+    }
   }
 
   ngOnInit(): void {
@@ -62,4 +73,12 @@ export class AppComponent implements OnInit {
     ];
   }
 
+}
+
+enum severity {
+  success = "success",
+  info = "info",
+  warn = "warn",
+  error = "error",
+  custom = "custom"
 }

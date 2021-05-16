@@ -33,6 +33,15 @@
   .toolbar img {
     margin: 0 16px;
   }
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px;
+  }
 </style>
 
 <!-- Toolbar -->
@@ -43,7 +52,7 @@
 <br />
 <br />
 <br />
-<p-toast position="top-center"></p-toast>
+<p-toast position="bottom-center"></p-toast>
 <p-panel header="Busca el operador móvil de cualquier número">
   <div class="card">
     <div class="p-fluid p-formgrid p-grid">
@@ -52,7 +61,7 @@
         <span class="p-input-icon-left">
           <i class="pi pi-phone"></i>
           <input type="number" pInputText placeholder="Número telefónico a 10 dígitos" [(ngModel)]="phoneNumber"
-            pTooltip="Escribe el número a 10 digitos" tooltipPosition="bottom">
+            pTooltip="Escribe el número a 10 digitos" tooltipPosition="bottom" (keypress)="validarLongitud($event)">
         </span>
 
       </div>
@@ -67,23 +76,23 @@
       </div>
     </div>
   </div>
-  <p-table [value]="pnns" styleClass="p-datatable-responsive-demo">
+  <p-table [value]="pnns" styleClass="p-datatable-responsive-demo" [loading]="pbLoading">
     <ng-template pTemplate="header">
       <tr>
-        <th>poblacion</th>
-        <th>municipio</th>
-        <th>estado</th>
-        <th>razon_social</th>
-        <th>nombre_corto</th>
+        <th>Operadora</th>
+        <th>Razon Social</th>
+        <th>Estado</th>
+        <th>Municipio</th>
+        <th>Poblacion</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-pnn>
       <tr>
-        <td><span class="p-column-title">poblacion</span>{{pnn.poblacion}}</td>
-        <td><span class="p-column-title">municipio</span>{{pnn.municipio}}</td>
-        <td><span class="p-column-title">estado</span>{{pnn.estado}}</td>
-        <td><span class="p-column-title">razon_social</span>{{pnn.razon_social}}</td>
         <td><span class="p-column-title">nombre_corto</span>{{pnn.nombre_corto}}</td>
+        <td><span class="p-column-title">razon_social</span>{{pnn.razon_social}}</td>
+        <td><span class="p-column-title">estado</span>{{pnn.estado}}</td>
+        <td><span class="p-column-title">municipio</span>{{pnn.municipio}}</td>
+        <td><span class="p-column-title">poblacion</span>{{pnn.poblacion}}</td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
@@ -95,5 +104,14 @@
     </ng-template>
   </p-table>
 </p-panel>
+
+<footer class="footer">
+  <div class="p-grid">
+    <div class="p-col-12 p-text-center">
+      <span [ngStyle]="{color:'var(--bluegray-500)'}">Desarrollado por jsnherrera,
+        deployado por Heroku</span>
+    </div>
+  </div>
+</footer>
 
 <router-outlet></router-outlet>
