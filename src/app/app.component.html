@@ -48,8 +48,13 @@
   <div class="card">
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-12 p-md-12">
-        <input type="number" pInputText placeholder="Número telefónico a 10 dígitos" [(ngModel)]="phoneNumber"
-          pTooltip="Escribe tu número a 10 digitos" tooltipPosition="bottom">
+
+        <span class="p-input-icon-left">
+          <i class="pi pi-phone"></i>
+          <input type="number" pInputText placeholder="Número telefónico a 10 dígitos" [(ngModel)]="phoneNumber"
+            pTooltip="Escribe el número a 10 digitos" tooltipPosition="bottom">
+        </span>
+
       </div>
       <div class="p-field p-col-12 p-md-6">
         <button pButton pRipple type="button" label="Buscar" (click)="getPnnByNumber()"></button>
@@ -90,5 +95,15 @@
     </ng-template>
   </p-table>
 </p-panel>
+
+<br>
+<br>
+<footer>
+  <div class="p-grid">
+    <div class="p-col"></div>
+    <div class="p-col">Desarrollado por jsnherrera, deployado por Heroku</div>
+    <div class="p-col"></div>
+  </div>
+</footer>
 
 <router-outlet></router-outlet>

@@ -21,28 +21,31 @@ export class AppComponent implements OnInit {
 
   }
 
-  addSingle() {
+  showSuccess() {
     this.messageService.add({ severity: 'success', summary: 'Consulta exitosa', detail: 'El número se consultó correctamente' });
+  }
+
+  showError(msgErr: string) {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: msgErr });
   }
 
   getPnnByNumber(): void {
     if (this.phoneNumber) {
       this.pbLoading = true;
       this.pnns = [];
-      try {
-        this.planService.getPnnByNumber(this.phoneNumber).subscribe(
-          (result: PnnResponse) => {
-            if (result.pnn) {
-              this.pnns.push(result.pnn);
-            }
-            this.pbLoading = false;
-            this.addSingle();
-          },
-        );
-      } catch (err) {
-        console.log(err);
-        this.pbLoading = false;
-      }
+      this.planService.getPnnByNumber(this.phoneNumber).subscribe(
+        (result: PnnResponse) => {
+          if (result.pnn) {
+            this.pnns.push(result.pnn);
+          }
+          this.pbLoading = false;
+          this.showSuccess();
+        }, err => {
+          console.log(err);
+          this.pbLoading = false;
+          this.showError(err.message);
+        }
+      );
     }
   }
 
