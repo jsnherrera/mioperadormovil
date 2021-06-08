@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class PlanService {
 
-  private baseUrl = 'https://pnn-api.herokuapp.com/PNN/v1/api/';
+  private baseUrl = 'MiBaseUrl';
 
   constructor(private http: HttpClient) { }
 
